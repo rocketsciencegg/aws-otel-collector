@@ -5,6 +5,10 @@ go 1.22.0
 toolchain go1.22.2
 
 require (
+	github.com/aws/aws-sdk-go-v2 v1.31.0
+	github.com/aws/aws-sdk-go-v2/config v1.27.37
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.35
+	github.com/aws/aws-sdk-go-v2/service/sts v1.31.1
 	github.com/open-telemetry/opentelemetry-collector-contrib/confmap/provider/s3provider v0.109.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awscloudwatchlogsexporter v0.109.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awsemfexporter v0.109.0
@@ -64,6 +68,7 @@ require (
 	go.opentelemetry.io/collector/exporter/otlpexporter v0.109.0
 	go.opentelemetry.io/collector/exporter/otlphttpexporter v0.109.0
 	go.opentelemetry.io/collector/extension v0.109.0
+	go.opentelemetry.io/collector/extension/auth v0.109.0
 	go.opentelemetry.io/collector/extension/ballastextension v0.108.1
 	go.opentelemetry.io/collector/extension/zpagesextension v0.109.0
 	go.opentelemetry.io/collector/featuregate v1.15.0
@@ -73,9 +78,11 @@ require (
 	go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.109.0
 	go.opentelemetry.io/collector/receiver v0.109.0
 	go.opentelemetry.io/collector/receiver/otlpreceiver v0.109.0
+	go.uber.org/goleak v1.3.0
 	go.uber.org/multierr v1.11.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/sys v0.25.0
+	google.golang.org/grpc v1.66.2
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
@@ -170,10 +177,7 @@ require (
 	github.com/apache/thrift v0.20.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/aws/aws-sdk-go v1.55.5 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.31.0 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.5 // indirect
-	github.com/aws/aws-sdk-go-v2/config v1.27.37 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.35 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.14 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.18 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.18 // indirect
@@ -187,7 +191,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/servicediscovery v1.31.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.23.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.27.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.31.1 // indirect
 	github.com/aws/smithy-go v1.21.0 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -445,7 +448,6 @@ require (
 	go.opentelemetry.io/collector/consumer/consumerprofiles v0.109.0 // indirect
 	go.opentelemetry.io/collector/consumer/consumertest v0.109.0 // indirect
 	go.opentelemetry.io/collector/exporter/exporterprofiles v0.109.0 // indirect
-	go.opentelemetry.io/collector/extension/auth v0.109.0 // indirect
 	go.opentelemetry.io/collector/extension/experimental/storage v0.109.0 // indirect
 	go.opentelemetry.io/collector/extension/extensioncapabilities v0.109.0 // indirect
 	go.opentelemetry.io/collector/filter v0.109.0 // indirect
@@ -497,7 +499,6 @@ require (
 	google.golang.org/api v0.188.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	google.golang.org/grpc v1.66.2 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
