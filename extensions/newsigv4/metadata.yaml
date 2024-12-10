@@ -1,0 +1,6 @@
+type: newsigv4
+
+status:
+  class: extension
+  stability:
+    beta: [extension]

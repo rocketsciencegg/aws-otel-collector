@@ -16,6 +16,7 @@
 package defaultcomponents // import "aws-observability.io/collector/defaultcomponents
 
 import (
+	"github.com/aws-observability/aws-otel-collector/extensions/newsigv4"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awscloudwatchlogsexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awsemfexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awsxrayexporter"
@@ -103,6 +104,7 @@ func Components() (otelcol.Factories, error) {
 		zpagesextension.NewFactory(),
 		ballastextension.NewFactory(),
 		filestorage.NewFactory(),
+		newsigv4.NewFactory(),
 	}
 
 	extensions, err := extension.MakeFactoryMap(extensionsList...)
