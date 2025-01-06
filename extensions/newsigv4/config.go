@@ -12,10 +12,11 @@ import (
 
 // Config stores the configuration for the Sigv4 Authenticator
 type Config struct {
-	Region        string     `mapstructure:"region,omitempty"`
-	Service       string     `mapstructure:"service,omitempty"`
-	AssumeRole    AssumeRole `mapstructure:"assume_role"`
-	credsProvider *aws.CredentialsProvider
+	Region                   string                   `mapstructure:"region,omitempty"`
+	Service                  string                   `mapstructure:"service,omitempty"`
+	AssumeRole               AssumeRole               `mapstructure:"assume_role"`
+	SharedCredentialsWatcher SharedCredentialsWatcher `mapstructure:"shared_credentials_watcher"`
+	credsProvider            *aws.CredentialsProvider
 }
 
 // AssumeRole holds the configuration needed to assume a role
@@ -23,6 +24,14 @@ type AssumeRole struct {
 	ARN         string `mapstructure:"arn,omitempty"`
 	SessionName string `mapstructure:"session_name,omitempty"`
 	STSRegion   string `mapstructure:"sts_region,omitempty"`
+}
+
+// SharedCredentialsWatcher holds the configuration to setup a file based
+// watch for environments where the shared credentials file is updated
+// periodically by an external process.
+type SharedCredentialsWatcher struct {
+	FileLocation string `mapstructure:"file_location,omitempty"`
+	ProfileName  string `mapstructure:"profile_name,omitempty"`
 }
 
 // compile time check that the Config struct satisfies the component.Config interface

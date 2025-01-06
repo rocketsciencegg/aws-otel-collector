@@ -13,7 +13,7 @@ import (
 )
 
 func TestComponentFactoryType(t *testing.T) {
-	require.Equal(t, "sigv4auth", NewFactory().Type().String())
+	require.Equal(t, "newsigv4", NewFactory().Type().String())
 }
 
 func TestComponentConfigStruct(t *testing.T) {
