@@ -39,6 +39,10 @@ func TestLoadConfig(t *testing.T) {
 			SessionName: "role_session_name",
 			STSRegion:   "region",
 		},
+		SharedCredentialsWatcher: SharedCredentialsWatcher{
+			FileLocation: "/local/credentials/credentials",
+			ProfileName:  "default",
+		},
 		// Ensure creds are the same for load config test; tested in extension_test.go
 		credsProvider: cfg.(*Config).credsProvider,
 	}, cfg)

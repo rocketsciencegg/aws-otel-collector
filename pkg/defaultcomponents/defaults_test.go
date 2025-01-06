@@ -26,8 +26,8 @@ import (
 
 const (
 	exportersCount  = 16
-	receiversCount  = 10
-	extensionsCount = 8
+	receiversCount  = 11
+	extensionsCount = 9
 	processorCount  = 15
 )
 
@@ -69,6 +69,7 @@ func TestComponents(t *testing.T) {
 	assert.NotNil(t, receivers[component.MustNewType("jaeger")])
 	assert.NotNil(t, receivers[component.MustNewType("kafka")])
 	assert.NotNil(t, receivers[component.MustNewType("filelog")])
+	assert.NotNil(t, receivers[component.MustNewType("hostmetrics")])
 
 	extensions := factories.Extensions
 	assert.Len(t, extensions, extensionsCount)
@@ -76,6 +77,7 @@ func TestComponents(t *testing.T) {
 	assert.NotNil(t, extensions[component.MustNewType("awsproxy")])
 	assert.NotNil(t, extensions[component.MustNewType("ecs_observer")])
 	assert.NotNil(t, extensions[component.MustNewType("sigv4auth")])
+	assert.NotNil(t, extensions[component.MustNewType("newsigv4")])
 	// core extensions
 	assert.NotNil(t, extensions[component.MustNewType("zpages")])
 	assert.NotNil(t, extensions[component.MustNewType("memory_ballast")])

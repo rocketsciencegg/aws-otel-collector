@@ -1,8 +1,11 @@
-sigv4auth:
+newsigv4:
   region: "region"
   service: "service"
   assume_role:
     session_name: "role_session_name"
-sigv4auth/missing_credentials:
+  shared_credentials_watcher:
+    file_location: "/local/credentials/credentials"
+    profile_name: "default"
+newsigv4/missing_credentials:
   region: "region"
   service: "service"
