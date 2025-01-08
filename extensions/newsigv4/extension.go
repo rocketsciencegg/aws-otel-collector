@@ -6,6 +6,7 @@ package newsigv4 // import "github.com/open-telemetry/opentelemetry-collector-co
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -105,7 +106,7 @@ func (sa *sigv4Auth) startWatcher() error {
 
 	cache, ok := (*sa.cfg.credsProvider).(invalidator)
 	if !ok {
-		return nil
+		return fmt.Errorf("credentials provider does not implement invalidator interface: %T", *sa.cfg.credsProvider)
 	}
 
 	go func() {
