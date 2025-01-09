@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	sigv4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
@@ -75,7 +76,6 @@ func (sa *sigv4Auth) Start(_ context.Context, host component.Host) error {
 		if err := sa.startWatcher(); err != nil {
 			componentstatus.ReportStatus(host, componentstatus.NewFatalErrorEvent(err))
 		}
-		sa.logger.Info("Started credentials file watcher")
 	}
 
 	return nil
@@ -96,6 +96,7 @@ func (sa *sigv4Auth) Shutdown(_ context.Context) error {
 
 func (sa *sigv4Auth) startWatcher() error {
 	location := sa.cfg.SharedCredentialsWatcher.FileLocation
+	parentDir := filepath.Dir(location)
 
 	// invalidator is a local copy of the internal interface for cache invalidators
 	// from the AWS Go SDK.
@@ -110,14 +111,16 @@ func (sa *sigv4Auth) startWatcher() error {
 	}
 
 	go func() {
+		sa.logger.Info("Launching shared credentials file watcher")
 		for {
 			select {
 			case event, ok := <-sa.watcher.Events:
+				sa.logger.Debug("Received watcher event", zap.Any("event", event))
 				if !ok {
 					return
 				}
 
-				if event.Has(fsnotify.Create | fsnotify.Write | fsnotify.Rename) {
+				if event.Has(fsnotify.Create|fsnotify.Write|fsnotify.Rename|fsnotify.Remove) && event.Name == location {
 					sa.logger.Info("Detected changes within shared credentials file")
 					cache.Invalidate()
 				}
@@ -131,7 +134,7 @@ func (sa *sigv4Auth) startWatcher() error {
 		}
 	}()
 
-	if err := sa.watcher.Add(location); err != nil {
+	if err := sa.watcher.Add(parentDir); err != nil {
 		return err
 	}
 
