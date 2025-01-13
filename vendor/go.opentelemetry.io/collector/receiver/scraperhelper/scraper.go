@@ -13,72 +13,60 @@ import (
 
 var errNilFunc = errors.New("nil scrape func")
 
-// ScrapeFunc scrapes metrics.
+// Deprecated: [v0.115.0] use scraper.ScrapeMetricsFunc.
 type ScrapeFunc func(context.Context) (pmetric.Metrics, error)
 
 func (sf ScrapeFunc) Scrape(ctx context.Context) (pmetric.Metrics, error) {
 	return sf(ctx)
 }
 
-// Scraper is the base interface for scrapers.
+// Deprecated: [v0.115.0] use scraper.Metrics.
 type Scraper interface {
 	component.Component
-
-	// ID returns the scraper id.
-	ID() component.ID
 	Scrape(context.Context) (pmetric.Metrics, error)
 }
 
-// ScraperOption apply changes to internal options.
-type ScraperOption func(*baseScraper)
+// Deprecated: [v0.115.0] use scraper.Option.
+type ScraperOption interface {
+	apply(*baseScraper)
+}
 
-// WithStart sets the function that will be called on startup.
+type scraperOptionFunc func(*baseScraper)
+
+func (of scraperOptionFunc) apply(e *baseScraper) {
+	of(e)
+}
+
+// Deprecated: [v0.115.0] use scraper.WithStart.
 func WithStart(start component.StartFunc) ScraperOption {
-	return func(o *baseScraper) {
+	return scraperOptionFunc(func(o *baseScraper) {
 		o.StartFunc = start
-	}
+	})
 }
 
-// WithShutdown sets the function that will be called on shutdown.
+// Deprecated: [v0.115.0] use scraper.WithShutdown.
 func WithShutdown(shutdown component.ShutdownFunc) ScraperOption {
-	return func(o *baseScraper) {
+	return scraperOptionFunc(func(o *baseScraper) {
 		o.ShutdownFunc = shutdown
-	}
+	})
 }
-
-var _ Scraper = (*baseScraper)(nil)
 
 type baseScraper struct {
 	component.StartFunc
 	component.ShutdownFunc
 	ScrapeFunc
-	id component.ID
 }
 
-func (b *baseScraper) ID() component.ID {
-	return b.id
-}
-
-// NewScraper creates a Scraper that calls Scrape at the specified collection interval,
-// reports observability information, and passes the scraped metrics to the next consumer.
-//
-// Deprecated: [v0.109.0] use NewScraperWithComponentType instead.
-func NewScraper(name string, scrape ScrapeFunc, options ...ScraperOption) (Scraper, error) {
-	return NewScraperWithComponentType(component.MustNewType(name), scrape, options...)
-}
-
-// NewScraperWithComponentType creates a Scraper that calls Scrape at the specified collection interval,
-// reports observability information, and passes the scraped metrics to the next consumer.
-func NewScraperWithComponentType(t component.Type, scrape ScrapeFunc, options ...ScraperOption) (Scraper, error) {
+// Deprecated: [v0.115.0] use scraper.NewMetrics.
+func NewScraperWithoutType(scrape ScrapeFunc, options ...ScraperOption) (Scraper, error) {
 	if scrape == nil {
 		return nil, errNilFunc
 	}
 	bs := &baseScraper{
 		ScrapeFunc: scrape,
-		id:         component.NewID(t),
 	}
 	for _, op := range options {
-		op(bs)
+		op.apply(bs)
 	}
 
 	return bs, nil
