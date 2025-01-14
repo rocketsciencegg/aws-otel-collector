@@ -4,8 +4,7 @@ newsigv4:
   assume_role:
     session_name: "role_session_name"
   shared_credentials_watcher:
-    file_location: "/local/credentials/credentials"
-    profile_name: "default"
+    profile_name: "profile_name"
 newsigv4/missing_credentials:
   region: "region"
   service: "service"
