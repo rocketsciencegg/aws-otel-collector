@@ -12,6 +12,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	sigv4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
+	awshttp "github.com/aws/aws-sdk-go-v2/aws/transport/http"
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials/stscreds"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
@@ -156,6 +157,9 @@ func newSigv4Extension(cfg *Config, awsSDKInfo string, logger *zap.Logger) *sigv
 func getCredsProviderFromConfig(cfg *Config) (*aws.CredentialsProvider, error) {
 	awscfg, err := awsconfig.LoadDefaultConfig(context.Background(),
 		awsconfig.WithRegion(cfg.AssumeRole.STSRegion),
+		awsconfig.WithHTTPClient(awshttp.NewBuildableClient().WithTransportOptions(func(transport *http.Transport) {
+			transport.DisableKeepAlives = true
+		})),
 	)
 	if err != nil {
 		return nil, err

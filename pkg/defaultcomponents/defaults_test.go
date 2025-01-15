@@ -25,9 +25,9 @@ import (
 )
 
 const (
-	exportersCount  = 16
+	exportersCount  = 15
 	receiversCount  = 11
-	extensionsCount = 9
+	extensionsCount = 8
 	processorCount  = 15
 )
 
@@ -42,7 +42,6 @@ func TestComponents(t *testing.T) {
 	assert.NotNil(t, exporters[component.MustNewType("awsemf")])
 	// core exporters
 	assert.NotNil(t, exporters[component.MustNewType("debug")])
-	assert.NotNil(t, exporters[component.MustNewType("logging")])
 	assert.NotNil(t, exporters[component.MustNewType("otlp")])
 	assert.NotNil(t, exporters[component.MustNewType("otlphttp")])
 	// other exporters
@@ -80,7 +79,6 @@ func TestComponents(t *testing.T) {
 	assert.NotNil(t, extensions[component.MustNewType("newsigv4")])
 	// core extensions
 	assert.NotNil(t, extensions[component.MustNewType("zpages")])
-	assert.NotNil(t, extensions[component.MustNewType("memory_ballast")])
 	// other extensions
 	assert.NotNil(t, extensions[component.MustNewType("pprof")])
 	assert.NotNil(t, extensions[component.MustNewType("health_check")])
@@ -89,7 +87,7 @@ func TestComponents(t *testing.T) {
 	processors := factories.Processors
 	assert.Len(t, processors, processorCount)
 	// aws processors
-	assert.NotNil(t, processors[component.MustNewType("experimental_metricsgeneration")])
+	assert.NotNil(t, processors[component.MustNewType("metricsgeneration")])
 	// core processors
 	assert.NotNil(t, processors[component.MustNewType("batch")])
 	assert.NotNil(t, processors[component.MustNewType("memory_limiter")])
