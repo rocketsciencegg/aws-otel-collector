@@ -1,8 +1,8 @@
 module github.com/aws-observability/aws-otel-collector/testbed
 
-go 1.22.0
+go 1.22.4
 
-toolchain go1.22.2
+toolchain go1.23.4
 
 require (
 	github.com/aws-observability/aws-otel-collector v0.42.0
