@@ -1,8 +1,8 @@
 module github.com/aws-observability/aws-otel-collector
 
-go 1.22.0
+go 1.22.4
 
-toolchain go1.22.2
+toolchain go1.23.4
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.32.6
@@ -181,6 +181,7 @@ require (
 	github.com/Showmax/go-fqdn v1.0.0 // indirect
 	github.com/alecthomas/participle/v2 v2.1.1 // indirect
 	github.com/alecthomas/units v0.0.0-20240626203959-61d1e3462e30 // indirect
+	github.com/amazon-contributing/opentelemetry-collector-contrib/override/aws v0.0.0-20250116001040-07637c7e4577 // indirect
 	github.com/antchfx/xmlquery v1.4.2 // indirect
 	github.com/antchfx/xpath v1.3.2 // indirect
 	github.com/apache/thrift v0.21.0 // indirect
@@ -553,3 +554,6 @@ exclude github.com/openshift/api v3.9.0+incompatible
 
 // https://groups.google.com/g/golang-announce/c/-nPEi39gI4Q/m/cGVPJCqdAQAJ?pli=1
 exclude golang.org/x/crypto v0.29.0
+
+// Replacing with Amazon Contrib version in order to support refreshing of AWS shared credentials
+replace github.com/open-telemetry/opentelemetry-collector-contrib/internal/aws/awsutil v0.115.0 => github.com/amazon-contributing/opentelemetry-collector-contrib/internal/aws/awsutil v0.0.0-20250116001040-07637c7e4577
