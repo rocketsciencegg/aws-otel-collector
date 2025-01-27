@@ -555,4 +555,5 @@ exclude github.com/openshift/api v3.9.0+incompatible
 // https://groups.google.com/g/golang-announce/c/-nPEi39gI4Q/m/cGVPJCqdAQAJ?pli=1
 exclude golang.org/x/crypto v0.29.0
 
+// Replacing with Amazon Contrib version in order to support refreshing of AWS shared credentials
 replace github.com/open-telemetry/opentelemetry-collector-contrib/internal/aws/awsutil v0.115.0 => github.com/amazon-contributing/opentelemetry-collector-contrib/internal/aws/awsutil v0.0.0-20250116001040-07637c7e4577
